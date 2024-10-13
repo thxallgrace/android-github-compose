@@ -8,35 +8,38 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import nextstep.github.GithubApplication
 import nextstep.github.data.GithubRepository
-import nextstep.github.model.GithubRepositoryDto
 
 class GithubRepoViewModel(
     private val repository: GithubRepository
 ) : ViewModel() {
-
-    private val _repositories = MutableStateFlow<List<GithubRepositoryDto>>(listOf())
-    val repositories: StateFlow<List<GithubRepositoryDto>> = _repositories.asStateFlow()
+    private val _uiState = MutableStateFlow<GithubRepoUiState>(GithubRepoUiState.Loading)
+    val uiState = _uiState.asStateFlow()
 
     init {
         fetchRepositories()
     }
 
     fun fetchRepositories() {
+        _uiState.value = GithubRepoUiState.Loading
+
         viewModelScope.launch {
             repository
                 .getRepositories(ORGANIZATION)
                 .onSuccess { result ->
                     Log.d("grace_log", "result: ${result.joinToString("\n")}")
-                    _repositories.value = result
+                    _uiState.value = if (result.isEmpty()) {
+                        GithubRepoUiState.Empty
+                    } else {
+                        GithubRepoUiState.Success(result)
+                    }
                 }
                 .onFailure {
                     Log.d("grace_log", "error: ${it.message}")
+                    _uiState.value = GithubRepoUiState.Error
                 }
         }
     }

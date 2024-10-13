@@ -2,4 +2,8 @@
     <string name="app_name">GitHub</string>
 
     <string name="github_repo_top_bar_title">NEXTSTEP Repositories</string>
+
+    <string name="github_repo_list_empty">목록이 비었습니다.</string>
+    <string name="github_repo_list_error_message">오류가 발생했습니다.</string>
+    <string name="github_repo_list_error_retry">재시도</string>
 </resources>
