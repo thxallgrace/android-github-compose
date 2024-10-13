@@ -7,4 +7,8 @@ import kotlinx.serialization.Serializable
 data class GithubRepositoryDto(
     @SerialName("full_name") val fullName: String,
     @SerialName("description") val description: String?,
-)
+    @SerialName("stargazers_count") val stars: Int = 0,
+) {
+    val isHot: Boolean
+        get() = stars >= 50
+}

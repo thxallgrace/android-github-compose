@@ -91,9 +91,7 @@ fun GithubRepoListScreen(
                             .background(color = MaterialTheme.colorScheme.surface),
                     ) {
                         items(uiState.repositories) { item ->
-                            RepoListItem(
-                                item = item,
-                            )
+                            RepoListItem(item = item)
                             HorizontalDivider()
                         }
                     }

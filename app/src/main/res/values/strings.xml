@@ -6,4 +6,6 @@
     <string name="github_repo_list_empty">목록이 비었습니다.</string>
     <string name="github_repo_list_error_message">오류가 발생했습니다.</string>
     <string name="github_repo_list_error_retry">재시도</string>
+
+    <string name="github_repo_item_hot_label">HOT</string>
 </resources>
